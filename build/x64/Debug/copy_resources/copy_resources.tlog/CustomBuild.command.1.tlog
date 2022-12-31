@@ -1,0 +1,22 @@
+^C:\DEV\HELICOPTER_GAME\BUILD\CMAKEFILES\9C5421D186F495C54CA830D85B194B52\COPY_RESOURCES.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_directory C:/Dev/helicopter_game/shaders C:/Dev/helicopter_game/build/shaders
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_directory C:/Dev/helicopter_game/textures C:/Dev/helicopter_game/build/textures
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\DEV\HELICOPTER_GAME\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Dev/helicopter_game -BC:/Dev/helicopter_game/build --check-stamp-file C:/Dev/helicopter_game/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

@@ -1,0 +1,1 @@
+target_sources(helicopter_game_exec PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/glad.c)

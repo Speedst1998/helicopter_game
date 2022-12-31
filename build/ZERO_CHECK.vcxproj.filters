@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Dev\helicopter_game\build\CMakeFiles\9c5421d186f495c54ca830d85b194b52\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{B2EF524B-8214-3909-AF5F-40AABAADC3E7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
