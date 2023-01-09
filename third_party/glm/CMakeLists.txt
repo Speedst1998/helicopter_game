@@ -1,0 +1,1 @@
+target_include_directories(helicopter_game_exec PUBLIC include)

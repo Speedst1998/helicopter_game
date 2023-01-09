@@ -1,7 +1,11 @@
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 #include "game.hpp"
 #include "resource_manager.hpp"
 #include "sprite_renderer.hpp"
 #include "game_level.hpp"
+#include "shader.hpp"
 
 
 SpriteRenderer  *Renderer;
@@ -23,8 +27,8 @@ void Game::Init(){
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(this->Width), static_cast<float>(this->Height), 0.0f, -1.0f, 1.0f);
     ResourceManager::GetShader("sprite").Use().SetInteger("image", 0);
     ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
-
-    Renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
+    auto shader = ResourceManager::GetShader("sprite");
+    Renderer = new SpriteRenderer(shader);
     ResourceManager::LoadTexture("../textures/awesomeface.png", true, "helicopter");
     ResourceManager::LoadTexture("../textures/2.png", true, "grass");
 
