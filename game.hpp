@@ -17,6 +17,7 @@ public:
     unsigned int Width, Height;
     std::vector<GameLevel> Levels;
     unsigned int Level;
+    Player PlayerObject;
     // constructor/destructor
     Game(unsigned int width, unsigned int height);
     ~Game();
@@ -26,4 +27,5 @@ public:
     void ProcessInput(float dt);
     void Update(float dt);
     void Render();
+    void SetPlayer(const GameObject&& player);
 };

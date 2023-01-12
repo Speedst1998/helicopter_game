@@ -22,17 +22,17 @@ Game::~Game()
 
 void Game::Init(){
     // load shaders
-    ResourceManager::LoadShader("../shaders/sprite.vs", "../shaders/sprite.frag", nullptr, "sprite");
+    ResourceManager::LoadShader("shaders/sprite.vs", "shaders/sprite.frag", nullptr, "sprite");
     // configure shaders
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(this->Width), static_cast<float>(this->Height), 0.0f, -1.0f, 1.0f);
     ResourceManager::GetShader("sprite").Use().SetInteger("image", 0);
     ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
     auto shader = ResourceManager::GetShader("sprite");
     Renderer = new SpriteRenderer(shader);
-    ResourceManager::LoadTexture("../textures/awesomeface.png", true, "helicopter");
-    ResourceManager::LoadTexture("../textures/2.png", true, "grass");
-
-    GameLevel one; one.Load("../levels/one.lvl", this->Width, this->Height * 0.5);
+    auto player_texture = ResourceManager::LoadTexture("textures/helicopter.png", true, "helicopter");
+    ResourceManager::LoadTexture("textures/2.png", true, "grass");
+    PlayerObject = GameObject(glm::vec2(20,20), glm::vec2(90, 90), player_texture);
+    GameLevel one; one.Load("levels/one.lvl", this->Width, this->Height);
     Levels.push_back(one);
 
     Level = 0;
@@ -42,7 +42,8 @@ void Game::Init(){
     
     
 void Game::Render(){
-    Texture2D texture = ResourceManager::GetTexture("helicopter"); 
-    //Renderer->DrawSprite(texture, glm::vec2(200.0f, 200.0f), glm::vec2(300.0f, 400.0f), 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+    // Texture2D texture = ResourceManager::GetTexture("helicopter"); 
+    // Renderer->DrawSprite(texture, glm::vec2(20.0f, 20.0f), glm::vec2(90, 90), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+    PlayerObject.Draw(*Renderer);
     Levels[Level].Draw(*Renderer);
 }

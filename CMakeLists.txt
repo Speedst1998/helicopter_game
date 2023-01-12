@@ -24,7 +24,6 @@ set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
-target_include_directories(helicopter_game_exec PUBLIC  "C:/Dev/Include")
 target_include_directories(helicopter_game_exec PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(helicopter_game_exec PUBLIC "include/helicopter_game")
 target_include_directories(helicopter_game_exec PUBLIC "third_party/stb")
@@ -46,4 +45,4 @@ add_custom_target(copy_resources ALL
     COMMENT "Copying resources to build directory"
 )
 
-
+add_dependencies(helicopter_game_exec copy_resources)

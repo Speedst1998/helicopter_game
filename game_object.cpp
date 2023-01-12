@@ -10,3 +10,25 @@ void GameObject::Draw(SpriteRenderer &renderer)
 {
     renderer.DrawSprite(this->Sprite, this->Position, this->Size, this->Rotation, this->Color);
 }
+
+void GameObject::SetGameObject(const GameObject&& game_object) {
+    Position = std::move(game_object.Position);
+    Size = std::move(game_object.Size);
+    Velocity = std::move(game_object.Velocity);
+    Color = std::move(game_object.Color);
+    Rotation = std::move(game_object.Rotation);
+    Sprite = std::move(game_object.Sprite);
+    IsSolid = std::move(game_object.IsSolid);
+    Destroyed = std::move(game_object.Destroyed);
+}
+
+void GameObject::SetGameObject(const GameObject& game_object) {
+    Position = game_object.Position;
+    Size = game_object.Size;
+    Velocity = game_object.Velocity;
+    Color = game_object.Color;
+    Rotation = game_object.Rotation;
+    Sprite = game_object.Sprite;
+    IsSolid = game_object.IsSolid;
+    Destroyed =game_object.Destroyed;
+}
