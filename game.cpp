@@ -31,7 +31,7 @@ void Game::Init(){
     Renderer = new SpriteRenderer(shader);
     auto player_texture = ResourceManager::LoadTexture("textures/helicopter.png", true, "helicopter");
     ResourceManager::LoadTexture("textures/2.png", true, "grass");
-    PlayerObject = GameObject(glm::vec2(20,20), glm::vec2(90, 90), player_texture);
+    PlayerObject = std::make_unique<Player>(glm::vec2(20,20), glm::vec2(90, 90), player_texture);
     GameLevel one; one.Load("levels/one.lvl", this->Width, this->Height);
     Levels.push_back(one);
 
@@ -44,6 +44,14 @@ void Game::Init(){
 void Game::Render(){
     // Texture2D texture = ResourceManager::GetTexture("helicopter"); 
     // Renderer->DrawSprite(texture, glm::vec2(20.0f, 20.0f), glm::vec2(90, 90), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-    PlayerObject.Draw(*Renderer);
+    PlayerObject->Draw(*Renderer);
     Levels[Level].Draw(*Renderer);
+}
+
+void Game::Update(float dt) {
+    
+}
+
+void Game::ProcessInput(float delta_time) {
+    PlayerObject->ProcessInput(Keys, delta_time);
 }

@@ -18,7 +18,9 @@ target_sources(helicopter_game_exec PUBLIC main.cpp
                                         game_object.hpp
                                         game_object.cpp
                                         game_level.hpp
-                                        game_level.cpp)
+                                        game_level.cpp
+                                        player.hpp
+                                        player.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

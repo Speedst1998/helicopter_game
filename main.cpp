@@ -4,6 +4,10 @@
 
 #include "game.hpp"
 
+Game game(800, 600);
+
+void keyPressCallBack(GLFWwindow *window, int key, int scancode, int action, int mode);
+
 int main(int, char **)
 {
     if (!glfwInit())
@@ -33,24 +37,44 @@ int main(int, char **)
         return -1;
     }
 
-    glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scancode, int action, int mode)
-                       {
-        if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-            glfwSetWindowShouldClose(window, GL_TRUE);
-        } });
+    glfwSetKeyCallback(window, keyPressCallBack);
 
     glfwSetFramebufferSizeCallback(window, [](GLFWwindow *window, int width, int height)
                                    { glViewport(0, 0, width, height); });
 
-    Game game(800, 600);
     game.Init();
+    float current_time = 0;
+    float previous_time = 0;
+    float delta_time = 0;
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
+        current_time = glfwGetTime();
+        delta_time = current_time - previous_time;
+        previous_time = current_time;
+        game.Update(delta_time);
+        game.ProcessInput(delta_time);
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         game.Render();
         glfwSwapBuffers(window);
     }
     glViewport(0, 0, 800, 600);
+}
+
+void keyPressCallBack(GLFWwindow *window, int key, int scancode, int action, int mode)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+    {
+        glfwSetWindowShouldClose(window, GL_TRUE);
+    }
+    if (key >= 0 && key <= 1024)
+    {
+        if (action == GLFW_PRESS){
+            game.Keys[key] = true;
+        }
+        else {
+            game.Keys[key] = false;
+        }
+    }
 }

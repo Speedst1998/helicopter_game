@@ -1,5 +1,8 @@
+#include <memory>
+
 #include "sprite_renderer.hpp"
 #include "game_level.hpp"
+#include "player.hpp"
 
 enum GameState
 {
@@ -17,7 +20,7 @@ public:
     unsigned int Width, Height;
     std::vector<GameLevel> Levels;
     unsigned int Level;
-    Player PlayerObject;
+    std::unique_ptr<Player> PlayerObject = nullptr;
     // constructor/destructor
     Game(unsigned int width, unsigned int height);
     ~Game();
