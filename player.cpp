@@ -7,22 +7,29 @@ Player::Player(glm::vec2 pos, glm::vec2 size, Texture2D sprite, glm::vec3 color,
 
 void Player::ProcessInput(const bool keys[], float delta_time)
 {
-    float velocity = PLAYER_VELOCITY * delta_time;
+    auto velocity = Velocity * glm::vec2(delta_time);
     // move playerboard
     if (keys[GLFW_KEY_A])
     {
-        Position.x -= velocity;
+        Position.x -= velocity.x;
     }
     if (keys[GLFW_KEY_D])
     {
-        Position.x += velocity;
+        Position.x += velocity.x;
     }
     if (keys[GLFW_KEY_W])
     {
-        Position.y -= velocity;
+        Position.y -= velocity.y;
     }
     if (keys[GLFW_KEY_S])
     {
-        Position.y += velocity;
+        Position.y += velocity.y;
+    }
+
+    if(ReboundFlag)
+    {
+        Velocity = glm::vec2(PLAYER_VELOCITY);
+        Position -= glm::vec2(10);
+        ReboundFlag = false;
     }
 }

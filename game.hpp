@@ -31,4 +31,5 @@ public:
     void Update(float dt);
     void Render();
     void SetPlayer(const GameObject&& player);
+    void DoCollisions();
 };

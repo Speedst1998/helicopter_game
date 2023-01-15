@@ -12,7 +12,7 @@ public:
     float Rotation;
     bool IsSolid;
     bool Destroyed;
-
+    bool ReboundFlag = false;
     Texture2D Sprite;
 
     GameObject();

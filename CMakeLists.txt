@@ -31,8 +31,8 @@ target_include_directories(helicopter_game_exec PUBLIC "include/helicopter_game"
 target_include_directories(helicopter_game_exec PUBLIC "third_party/stb")
 target_include_directories(helicopter_game_exec PUBLIC "third_party/glad")
 target_link_directories(helicopter_game_exec PUBLIC "lib")
-target_link_libraries(helicopter_game_exec PUBLIC glfw3 opengl32)
 add_subdirectory(third_party)
+target_link_libraries(helicopter_game_exec PUBLIC glfw3 opengl32 fmt::fmt)
 
 add_custom_target(copy_resources ALL
     COMMAND ${CMAKE_COMMAND} -E copy_directory

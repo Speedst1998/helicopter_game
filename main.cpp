@@ -1,6 +1,7 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <fmt/format.h>
 
 #include "game.hpp"
 
@@ -10,6 +11,7 @@ void keyPressCallBack(GLFWwindow *window, int key, int scancode, int action, int
 
 int main(int, char **)
 {
+    std::cout << "Starting game" << std::endl;
     if (!glfwInit())
     {
         std::cout << "Failed to initialize GLFW" << std::endl;
@@ -70,10 +72,12 @@ void keyPressCallBack(GLFWwindow *window, int key, int scancode, int action, int
     }
     if (key >= 0 && key <= 1024)
     {
-        if (action == GLFW_PRESS){
+        if (action == GLFW_PRESS)
+        {
             game.Keys[key] = true;
         }
-        else {
+        else if (action == GLFW_RELEASE)
+        {
             game.Keys[key] = false;
         }
     }
