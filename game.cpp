@@ -30,9 +30,9 @@ void Game::Init()
     ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
     auto shader = ResourceManager::GetShader("sprite");
     Renderer = new SpriteRenderer(shader);
-    auto player_texture = ResourceManager::LoadTexture("textures/helicopter.png", true, "helicopter");
+    auto player_texture = ResourceManager::LoadTexture("textures/helicopter_anim/helicopter.png", true, "helicopter");
     ResourceManager::LoadTexture("textures/2.png", true, "grass");
-    PlayerObject = std::make_unique<Player>(glm::vec2(20, 20), glm::vec2(90, 90), player_texture, glm::vec3(1), glm::vec2(100,100));
+    PlayerObject = std::make_unique<Player>(glm::vec2(20, 20), glm::vec2(90, 90), player_texture, glm::vec3(1), glm::vec2(100, 100));
     GameLevel one;
     one.Load("levels/one.lvl", this->Width, this->Height);
     Levels.push_back(one);
@@ -40,7 +40,7 @@ void Game::Init()
     Level = 0;
 }
 
-void Game::Render()
+void Game::Render(float delta_time)
 {
     // Texture2D texture = ResourceManager::GetTexture("helicopter");
     // Renderer->DrawSprite(texture, glm::vec2(20.0f, 20.0f), glm::vec2(90, 90), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -68,6 +68,7 @@ void Game::DoCollisions()
         {
             if (tile.IsSolid)
             {
+                //fmt::print("Collision Detected.  Player : x -> {} x + size  {}, Tile : {} \n", PlayerObject->Position.x, PlayerObject->Position.x + PlayerObject->Size.x, tile.Position.x);
                 PlayerObject->Velocity = glm::vec2(0);
                 PlayerObject->ReboundFlag = true;
             }
@@ -78,7 +79,7 @@ void Game::DoCollisions()
 bool CheckCollision(const GameObject &game_object1, const GameObject &game_object2)
 {
     auto is_collided_y = ((game_object1.Position.y + game_object1.Size.y) >= game_object2.Position.y) && (game_object2.Position.y <= (game_object1.Position.y + game_object1.Size.y));
-    auto is_collided_x = ((game_object1.Position.x + game_object1.Size.x) >= game_object2.Position.x) && (game_object2.Position.x <= (game_object1.Position.x + game_object1.Size.x));
+    auto is_collided_x = ((game_object1.Position.x + game_object1.Size.x) >= game_object2.Position.x) && (game_object2.Position.x + game_object2.Size.x >= (game_object1.Position.x ));
     // fmt::print("gm1 X : {} , gm1 Y : {}, gm2 X : {} , gm2 Y {}\n", game_object1.Position.x, game_object1.Position.y, game_object2.Position.x, game_object2.Position.y);
     return is_collided_x && is_collided_y;
 }

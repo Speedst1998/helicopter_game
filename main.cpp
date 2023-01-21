@@ -58,7 +58,7 @@ int main(int, char **)
         game.ProcessInput(delta_time);
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        game.Render();
+        game.Render(delta_time);
         glfwSwapBuffers(window);
     }
     glViewport(0, 0, 800, 600);

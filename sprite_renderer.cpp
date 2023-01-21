@@ -1,3 +1,4 @@
+#include <fmt/core.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -19,12 +20,12 @@ void SpriteRenderer::initRenderData() {
     float vertices[] = {
         // Pos      // Tex
         0.0f, 1.0f, 0.0f, 1.0f,
-        1.0f, 0.0f, 1.0f, 0.0f,
+        1.0f, 0.0f, 0.125f, 0.0f,
         0.0f, 0.0f, 0.0f, 0.0f,
 
         0.0f, 1.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 1.0f,
-        1.0f, 0.0f, 1.0f, 0.0f
+        1.0f, 1.0f, 0.125f, 1.0f,
+        1.0f, 0.0f, 0.125f, 0.0f
     };
     glGenVertexArrays(1, &this->quadVAO);
     glGenBuffers(1, &VBO);
@@ -37,7 +38,7 @@ void SpriteRenderer::initRenderData() {
     glBindVertexArray(0);
 }
 
-void SpriteRenderer::DrawSprite(Texture2D &texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color)
+void SpriteRenderer::DrawSprite(Texture2D &texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color, int frameIndex)
 {
     this->shader.Use();
     glm::mat4 model = glm::mat4(1.0f);
@@ -48,6 +49,7 @@ void SpriteRenderer::DrawSprite(Texture2D &texture, glm::vec2 position, glm::vec
     model = glm::scale(model, glm::vec3(size, 1.0f));
     this->shader.SetMatrix4("model", model);
     this->shader.SetVector3f("spriteColor", color);
+    this->shader.SetInteger("frameIndex", frameIndex);
     glActiveTexture(GL_TEXTURE0);
     texture.Bind();
     glBindVertexArray(this->quadVAO);

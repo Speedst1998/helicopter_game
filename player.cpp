@@ -1,6 +1,7 @@
+#include <fmt/core.h>
 #include "player.hpp"
-
 #include "GLFW/glfw3.h"
+
 Player::Player(glm::vec2 pos, glm::vec2 size, Texture2D sprite, glm::vec3 color, glm::vec2 velocity) : GameObject(pos, size, sprite, color, velocity)
 {
 }
@@ -26,10 +27,21 @@ void Player::ProcessInput(const bool keys[], float delta_time)
         Position.y += velocity.y;
     }
 
-    if(ReboundFlag)
+    if (ReboundFlag)
     {
         Velocity = glm::vec2(PLAYER_VELOCITY);
         Position -= glm::vec2(10);
         ReboundFlag = false;
     }
+}
+
+void Player::Draw(SpriteRenderer &renderer)
+{
+    static int frameCount = 0;
+
+    if (frameCount++ % 3 == 0)
+    {
+        frameIndex = frameIndex % 8 + 1;
+    }
+    renderer.DrawSprite(this->Sprite, this->Position, this->Size, this->Rotation, this->Color, frameIndex);
 }
