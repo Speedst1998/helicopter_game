@@ -6,7 +6,7 @@
 class SpriteRenderer
 {
     public:
-        SpriteRenderer(Shader &shader);
+        SpriteRenderer(Shader &shader, int number_of_columns = 1, int number_of_rows = 1);
         ~SpriteRenderer();
 
         void DrawSprite(Texture2D &texture, glm::vec2 position, 
@@ -16,5 +16,5 @@ class SpriteRenderer
         Shader       shader; 
         unsigned int quadVAO;
 
-        void initRenderData();
+        void initRenderData(int number_of_columns, int number_of_rows);
 };

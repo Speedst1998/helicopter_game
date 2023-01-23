@@ -8,7 +8,8 @@
 #include "game_level.hpp"
 #include "shader.hpp"
 
-SpriteRenderer *Renderer;
+SpriteRenderer *PlayerRenderer;
+SpriteRenderer *TileRenderer;
 Game::Game(unsigned int width, unsigned int height)
     : State(GAME_ACTIVE), Keys(), Width(width), Height(height)
 {
@@ -16,22 +17,29 @@ Game::Game(unsigned int width, unsigned int height)
 
 Game::~Game()
 {
-    delete Renderer;
-    Renderer = nullptr;
+    delete PlayerRenderer;
+    PlayerRenderer = nullptr;
 }
 
 void Game::Init()
 {
     // load shaders
-    ResourceManager::LoadShader("shaders/sprite.vs", "shaders/sprite.frag", nullptr, "sprite");
+    ResourceManager::LoadShader("shaders/player_sprite.vs", "shaders/sprite.frag", nullptr, "player_sprite");
+    ResourceManager::LoadShader("shaders/tile_sprite.vs", "shaders/sprite.frag", nullptr, "tile_sprite");
     // configure shaders
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(this->Width), static_cast<float>(this->Height), 0.0f, -1.0f, 1.0f);
-    ResourceManager::GetShader("sprite").Use().SetInteger("image", 0);
-    ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
-    auto shader = ResourceManager::GetShader("sprite");
-    Renderer = new SpriteRenderer(shader);
+    ResourceManager::GetShader("player_sprite").Use().SetInteger("image", 0);
+    ResourceManager::GetShader("player_sprite").SetMatrix4("projection", projection);
+    ResourceManager::GetShader("tile_sprite").Use().SetInteger("image", 0);
+    ResourceManager::GetShader("tile_sprite").SetMatrix4("projection", projection);
+    auto shader = ResourceManager::GetShader("player_sprite");
+    PlayerRenderer = new SpriteRenderer(shader,8);
+    auto tile_shader = ResourceManager::GetShader("tile_sprite");
+    TileRenderer = new SpriteRenderer(tile_shader);
     auto player_texture = ResourceManager::LoadTexture("textures/helicopter_anim/helicopter.png", true, "helicopter");
     ResourceManager::LoadTexture("textures/2.png", true, "grass");
+    ResourceManager::LoadTexture("textures/18.png", true, "sky");
+    ResourceManager::LoadTexture("textures/clouds/PNG/Clouds_white/Shape3/cloud_shape3_3.png", true, "cloud");
     PlayerObject = std::make_unique<Player>(glm::vec2(20, 20), glm::vec2(90, 90), player_texture, glm::vec3(1), glm::vec2(100, 100));
     GameLevel one;
     one.Load("levels/one.lvl", this->Width, this->Height);
@@ -44,8 +52,8 @@ void Game::Render(float delta_time)
 {
     // Texture2D texture = ResourceManager::GetTexture("helicopter");
     // Renderer->DrawSprite(texture, glm::vec2(20.0f, 20.0f), glm::vec2(90, 90), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
-    PlayerObject->Draw(*Renderer);
-    Levels[Level].Draw(*Renderer);
+    Levels[Level].Draw(*TileRenderer);
+    PlayerObject->Draw(*PlayerRenderer);
 }
 
 void Game::Update(float dt)

@@ -4,10 +4,10 @@
 
 #include "sprite_renderer.hpp"
 
-SpriteRenderer::SpriteRenderer(Shader &shader)
+SpriteRenderer::SpriteRenderer(Shader &shader, int number_of_columns, int number_of_rows)
 {
     this->shader = shader;
-    this->initRenderData();
+    this->initRenderData(number_of_columns, number_of_rows);
 }
 
 SpriteRenderer::~SpriteRenderer()
@@ -15,17 +15,17 @@ SpriteRenderer::~SpriteRenderer()
     glDeleteVertexArrays(1, &this->quadVAO);
 }
 
-void SpriteRenderer::initRenderData() {
+void SpriteRenderer::initRenderData(int number_of_columns, int number_of_rows) {
     unsigned int VBO;
     float vertices[] = {
         // Pos      // Tex
-        0.0f, 1.0f, 0.0f, 1.0f,
-        1.0f, 0.0f, 0.125f, 0.0f,
+        0.0f, 1.0f, 0.0f, 1.0f/number_of_rows,
+        1.0f, 0.0f, 1.0f/number_of_columns, 0.0f,
         0.0f, 0.0f, 0.0f, 0.0f,
 
-        0.0f, 1.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 0.125f, 1.0f,
-        1.0f, 0.0f, 0.125f, 0.0f
+        0.0f, 1.0f, 0.0f, 1.0f/number_of_rows,
+        1.0f, 1.0f, 1.0f/number_of_columns, 1.0f/number_of_rows,
+        1.0f, 0.0f, 1.0f/number_of_columns, 0.0f
     };
     glGenVertexArrays(1, &this->quadVAO);
     glGenBuffers(1, &VBO);
