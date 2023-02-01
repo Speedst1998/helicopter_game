@@ -5,7 +5,8 @@ out vec2 TexCoords;
 
 uniform mat4 model;
 uniform mat4 projection;
-uniform int frameIndex = 1; 
+uniform int frameIndex = 1;
+uniform mat4 view;
 
 void main()
 {

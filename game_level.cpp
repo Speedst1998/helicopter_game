@@ -43,7 +43,7 @@ void GameLevel::Init(std::vector<std::vector<unsigned int>> tileData, unsigned i
                 }
                 default:
                 {
-                    this->Bricks.push_back(GameObject(pos, size, ResourceManager::GetTexture("sky"), glm::vec3(1.0f, 1.0f, 1.0f)));
+                    this->Bricks.push_back(GameObject(pos, size, ResourceManager::GetTexture("sky"), glm::vec3(0.0f, 0.0f, 0.0f)));
                     break;
                 }
             }
@@ -78,6 +78,8 @@ void GameLevel::Load(const GLchar *file, unsigned int levelWidth, unsigned int l
 
 void GameLevel::Draw(SpriteRenderer &renderer)
 {
+    static int counter = 0;
+    CurrentEdge = (CurrentEdge + 1 ) % 800; 
     for (GameObject &tile : this->Bricks)
         if (!tile.Destroyed)
             tile.Draw(renderer);

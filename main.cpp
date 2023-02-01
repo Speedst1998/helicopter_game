@@ -56,7 +56,7 @@ int main(int, char **)
         previous_time = current_time;
         game.Update(delta_time);
         game.ProcessInput(delta_time);
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(1.0f, 0.5f, 0.5f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         game.Render(delta_time);
         glfwSwapBuffers(window);

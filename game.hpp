@@ -21,6 +21,7 @@ public:
     std::vector<GameLevel> Levels;
     unsigned int Level;
     std::unique_ptr<Player> PlayerObject = nullptr;
+    std::unique_ptr<GameObject> BackgroundObject = nullptr;
     // constructor/destructor
     Game(unsigned int width, unsigned int height);
     ~Game();
@@ -32,4 +33,7 @@ public:
     void Render(float delta_time);
     void SetPlayer(const GameObject&& player);
     void DoCollisions();
+
+private:
+    glm::mat4 camera_view;
 };

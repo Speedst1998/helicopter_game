@@ -20,5 +20,6 @@ public:
     GLboolean IsCompleted();
 
 private:
+    int CurrentEdge = 0;
     void Init(std::vector<std::vector<GLuint>> tileData, GLuint levelWidth, GLuint levelHeight);
 };
